@@ -1,6 +1,6 @@
 //Basado en https://github.com/Makuna/Rtc/blob/master/examples/DS1302_Simple/DS1302_Simple.ino
 #include <RtcDS1302.h>
-ThreeWire myWire(4, 5, 2);  // IO, SCLK, CE
+ThreeWire myWire(6, 5, 4);  // DAT (I/O), CLK (SCLK), RST (CE)
 RtcDS1302<ThreeWire> Rtc(myWire);
 #include <Servo.h>
 Servo panel;
@@ -85,7 +85,10 @@ void loop() {
   if (LDR <= 600) {
     panel.write(pos_default);
   }
-  if (now.Minute() >= 2 && now.Minute() < 12) {
+
+  //MODIFICADO
+  //if (now.Minute() >= 2 && now.Minute() < 12) {
+  if (now.Minute() >= 2 && now.Minute() < 58) {
     act_1 = true;
   }
 
@@ -97,7 +100,10 @@ void loop() {
       t = time;
       pos_default_add++;
     }
-    if (LDR > 800) {
+
+    //MODIFICADO
+    //if (LDR > 800) {
+    if (LDR > 220) {
       panel.write(pos_default_add);
       Serial.print("GRADOS SERVO");
       Serial.println(pos_default_add);
